@@ -3,9 +3,11 @@ import java.util.*;
 
 public class WordleGame {
 
+
+    private int attemptsLeft = 6;
+
     private final WordleDictionary dictionary;
     private final String answer;
-    private int attemptsLeft = 6;
 
     private final List<String> history = new ArrayList<>();
     private final Map<String, String> patterns = new HashMap<>();
@@ -26,11 +28,16 @@ public class WordleGame {
 
         validate(word);
 
+
         attemptsLeft--;
+
         history.add(word);
 
         String pattern = check(word, answer);
         patterns.put(word, pattern);
+
+        // лог попыток
+        System.out.println("Осталось попыток: " + attemptsLeft);
 
         return pattern;
     }
@@ -49,7 +56,7 @@ public class WordleGame {
         }
     }
 
-    // ✅ корректный Wordle-алгоритм с учётом повторов
+
     private String check(String guess, String answer) {
         char[] result = {'-', '-', '-', '-', '-'};
         Map<Character, Integer> freq = new HashMap<>();
@@ -80,6 +87,7 @@ public class WordleGame {
 
         return new String(result);
     }
+
 
     public boolean isGameOver() {
         return attemptsLeft <= 0 || history.contains(answer);
